@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web2Grasp</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- <meta name="author" content="anonymous"> -->
+    <!-- <meta name="description" content=""> -->
+    <meta name="viewport" content="width=800px, initial-scale=0.8, maximum-scale=2.0, user-scalable=yes">
+    <meta name="google-site-verification" content="ky_GtW3ix1x6MhH-pM6PonkpJCmE-237rRUvxvyQjVs" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./static/image/favicon.png">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+
+    <!-- MathJax -->
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>        
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      });
+    </script>
+
+    <!-- visitor statistics -->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <!-- model-viewer -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  </head>
+
+
+  <body>
+    <!-- Title -->
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title"><strong>Web2Grasp</strong>: Learning Functional Grasps from Web Images of Hand-Object Interactions</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <strong>Hongyi Chen<sup>1*</sup>,</strong>
+                </span>
+                <span class="author-block">
+                  <strong>Yunchao Yao<sup>1*</sup>,</strong>
+                </span>
+                <span class="author-block">
+                  <strong>Yufei Ye<sup>2</sup>,</strong>
+                </span>
+                <span class="author-block">
+                  <strong>Zhixuan Xu<sup>3</sup>,</strong>
+                </span>
+                <span class="author-block">
+                  <strong>Homanga Bharadhwaj<sup>1</sup>,</strong>
+                </span>
+                <span class="author-block">
+                  <strong>Jiashun Wang<sup>1</sup>,</strong>
+                </span>
+                <span class="author-block">
+                  <strong>Shubham Tulsiani<sup>1</sup>,</strong>
+                </span>
+                <span class="author-block">
+                  <strong>Zackory Erickson<sup>1</sup>,</strong>
+                </span>
+                <span class="author-block">
+                  <strong>Jeffrey Ichnowski<sup>1</sup></strong>
+                </span>
+              </div>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <sup>1</sup> Carnegie Mellon University,
+                </span>
+                <span class="author-block">
+                  <sup>2</sup> Stanford University,
+                </span>
+                <span class="author-block">
+                  <sup>3</sup> National University of Singapore
+                </span>
+              </div>
+
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- PDF Link -->
+                </div>
+              </div>
+
+              <!-- Add buttons below title -->
+              <div class="buttons is-centered" style="margin-top: 20px;">
+                <button class="button is-primary is-medium" disabled>
+                  <span class="icon">
+                    <i class="fas fa-database"></i>
+                  </span>
+                  <span>Data (Coming Soon)</span>
+                </button>
+                <button class="button is-info is-medium" disabled>
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Intro Video -->
+    <!-- Intro Video -->
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <video id="intro" controls playsinline height="100%" class="video-with-border">
+            <source src="./static/data/intro_video.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <!-- Abstract -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Functional grasping is essential for enabling dexterous multi-finger robot hands to manipulate objects effectively.  
+                However, most prior work either focuses on power grasping, which simply involves holding an object still, or relies on costly teleoperated robot demonstrations to teach robots how to grasp each object functionally.
+                Instead, we propose extracting human grasp information from web images since they depict natural and functional object interactions, thereby bypassing the need for curated demonstrations.
+                We reconstruct hand-object interaction (HOI) 3D meshes from RGB images, retarget the human hand to multi-finger robot hands, and align the noisy object mesh with its accurate 3D shape. We show that these relatively low-quality HOI data from inexpensive web sources can effectively train a functional grasping model.
+                To further expand the grasp dataset for seen and unseen objects, we use the initially-trained grasping policy with web data in the IsaacGym simulator to generate physically feasible grasps while preserving functionality. 
+                We train the grasping model on 10 object categories and evaluate it on 9 unseen objects, including challenging items such as syringes, pens, spray bottles, and tongs, which are underrepresented in existing datasets.
+                We train the model on the web HOI dataset, achieving a 75.8% success rate on seen objects and 61.8% across all objects in simulation, with a 6.7% improvement in success rate and a 1.8$\times$ increase in functionality ratings over baselines. Simulator-augmented data further boosts performance from 61.8% to 83.4%.
+                The sim-to-real transfer to the LEAP Hand achieves a 85% success rate.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!--/ Abstract -->
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <!-- Overview -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Pipeline Overview</h2>
+            <div class="content has-text-justified">
+              <figure>
+                <img src="./static/image/pipeline.png" alt="Overview of the Web2Grasp framework">
+                <figcaption style="font-style: normal; font-size: 0.95em;">We propose <strong>Web2Grasp</strong> for autonomously obtaining robot grasp data by reconstructing Hand-Object meshes from Web images, re-targeting the humand hand pose to a robot hand pose, and aligning the object mesh with a pseudo ground-truth object mesh obtained via text-to-3D approaches. We demonstrate that the resulting dataset obtained via web images and not requiring any robot-specific teleoperation enables training a supervised learning model with strong grasping performance both in simulation and in the real-world. </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <!--/ Overview -->
+      </div>
+    </section>
+
+
+
+
+
+    
+    <!-- Reconstruction Grasps -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column">
+            <h2 class="title is-3 has-text-centered">Reconstructed HOI from Web Images</h2>
+            <div class="columns is-centered">
+              <div class="column is-two-third">
+                <div class="content has-text-justified">
+                  <p class="has-text-centered" style="margin-top: -10px; margin-bottom: 20px;">
+                    We reconstruct human HOI from web images of humans holding objects, retarget the human hand mesh to the multi-fingered robot, and align the noisy object meshes with accurate 3D shapes generated by the text-to-3D tool Meshy AI.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered has-text-centered">
+          <!-- Model Viewers for Reconstructed HOI -->
+          <div class="column is-one-quarter" style="display: flex; flex-direction: column; align-items: center;">
+            <model-viewer
+              id="modelViewerHOI0"
+              src="static/data/HOI/shadowhand/power_drill/0.glb"
+              alt="Reconstructed HOI 0"
+              ar
+              camera-controls
+              auto-rotate
+              auto-rotate-delay="1000"
+              interaction-prompt-threshold="2000"
+              exposure="1.2"
+              shadow-intensity="1"
+              environment-image="neutral"
+              style="width: 200px; height: 200px; border: 3px solid #66c0ff; border-radius: 15px;">
+            </model-viewer>
+            <p style="font-size: 20px; font-weight: bold;">Grasp 0</p>
+          </div>
+
+          <div class="column is-one-quarter" style="display: flex; flex-direction: column; align-items: center;">
+            <model-viewer
+              id="modelViewerHOI1"
+              src="static/data/HOI/shadowhand/power_drill/1.glb"
+              alt="Reconstructed HOI 1"
+              ar
+              camera-controls
+              auto-rotate
+              auto-rotate-delay="1000"
+              interaction-prompt-threshold="2000"
+              exposure="1.2"
+              shadow-intensity="1"
+              environment-image="neutral"
+              style="width: 200px; height: 200px; border: 3px solid #66c0ff; border-radius: 15px;">
+            </model-viewer>
+            <p style="font-size: 20px; font-weight: bold;">Grasp 1</p>
+          </div>
+
+          <div class="column is-one-quarter" style="display: flex; flex-direction: column; align-items: center;">
+            <model-viewer
+              id="modelViewerHOI2"
+              src="static/data/HOI/shadowhand/power_drill/2.glb"
+              alt="Reconstructed HOI 2"
+              ar
+              camera-controls
+              auto-rotate
+              auto-rotate-delay="1000"
+              interaction-prompt-threshold="2000"
+              exposure="1.2"
+              shadow-intensity="1"
+              environment-image="neutral"
+              style="width: 200px; height: 200px; border: 3px solid #66c0ff; border-radius: 15px;">
+            </model-viewer>
+            <p style="font-size: 20px; font-weight: bold;">Grasp 2</p>
+          </div>
+
+          <!-- Controls for Object Selection -->
+          <div class="column is-one-quarter">
+            <!-- Robot Selection Dropdown -->
+            <div class="dropdown-container" style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
+              <label for="robotNameHOI" style="font-size: 20px; font-weight: bold;">Robot Hand</label>
+              <select id="robotNameHOI" class="custom-select" style="width: 200px; margin-top: 10px;">
+                <option value="shadowhand" style="font-size: 14px;">ShadowHand</option>
+                <option value="leaphand" style="font-size: 14px;">LeapHand</option>
+              </select>
+            </div>
+
+            <!-- Object Name Dropdown -->
+            <div class="dropdown-container" style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
+              <label for="objectNameHOI" style="font-size: 20px; font-weight: bold;">Object Name</label>
+              <select id="objectNameHOI" class="custom-select" style="width: 200px; margin-top: 10px;">
+                <option value="longsword" style="font-size: 14px;">longsword</option>
+                <option value="microphone" style="font-size: 14px;">microphone</option>
+                <option value="mug" style="font-size: 14px;">mug</option>
+                <option value="pen" style="font-size: 14px;">pen</option>
+                <option value="phone" style="font-size: 14px;">phone</option>
+                <option value="power_drill" style="font-size: 14px;">power_drill</option>
+                <option value="spray" style="font-size: 14px;">spray</option>
+                <option value="syringe" style="font-size: 14px;">syringe</option>
+                <option value="tong" style="font-size: 14px;">tong</option>
+                <option value="wine_glass" style="font-size: 14px;">wine_glass</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Functional Grasp Predictions -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column">
+            <h2 class="title is-3 has-text-centered">Functional Grasp Predictions</h2>
+            <div class="columns is-centered">
+              <div class="column is-two-third">
+                <div class="content has-text-justified">
+                  <p class="has-text-centered" style="margin-top: -10px; margin-bottom: 20px;">
+                    Using these reconstructed HOI as training data, we train the interaction-centric grasping model DRO. 
+                
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered has-text-centered">
+          <!-- Model Viewer for ShadowHand -->
+          <div class="column is-one-quarter" style="display: flex; flex-direction: column; align-items: center;">
+            <model-viewer
+              id="modelViewer2"
+              src="static/data/3dmodel/ShadowHand/axe/0.glb"
+              alt="ShadowHand Grasp"
+              ar
+              camera-controls
+              auto-rotate
+              auto-rotate-delay="1000"
+              interaction-prompt-threshold="2000"
+              exposure="1.2"
+              shadow-intensity="1"
+              environment-image="neutral"
+              style="width: 200px; height: 200px; border: 3px solid #66c0ff; border-radius: 15px;">
+            </model-viewer>
+            <p style="font-size: 20px; font-weight: bold;">Web2Grasp</p>
+          </div>
+
+          <!-- Controls for Object Selection -->
+          <div class="column is-one-quarter">
+            <!-- Object Name Dropdown -->
+            <div class="dropdown-container" style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
+              <label for="objectName" style="font-size: 20px; font-weight: bold;">Object Name</label>
+              <select id="objectName" class="custom-select" style="width: 200px; margin-top: 10px;">
+                <option value="axe" style="font-size: 14px;">axe</option>
+                <option value="fire_torch" style="font-size: 14px;">fire_torch</option>
+                <option value="hammer" style="font-size: 14px;">hammer</option>
+                <option value="longsword" style="font-size: 14px;">longsword</option>
+                <option value="microphone" style="font-size: 14px;">microphone</option>
+                <option value="mug" style="font-size: 14px;">mug</option>
+                <option value="pen" style="font-size: 14px;">pen</option>
+                <option value="phone" style="font-size: 14px;">phone</option>
+                <option value="power_drill" style="font-size: 14px;">power_drill</option>
+                <option value="remote" style="font-size: 14px;">remote</option>
+                <option value="soap_bottle" style="font-size: 14px;">soap_bottle</option>
+                <option value="spray" style="font-size: 14px;">spray</option>
+                <option value="syringe" style="font-size: 14px;">syringe</option>
+                <option value="teapot" style="font-size: 14px;">teapot</option>
+                <option value="tong" style="font-size: 14px;">tong</option>
+                <option value="whip" style="font-size: 14px;">whip</option>
+                <option value="whisk" style="font-size: 14px;">whisk</option>
+                <option value="wine_glass" style="font-size: 14px;">wine_glass</option>
+                <option value="writing_brush" style="font-size: 14px;">writing_brush</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // HOI Model Viewers
+      const modelViewerHOI0 = document.getElementById('modelViewerHOI0');
+      const modelViewerHOI1 = document.getElementById('modelViewerHOI1');
+      const modelViewerHOI2 = document.getElementById('modelViewerHOI2');
+      const objectNameSelectHOI = document.getElementById('objectNameHOI');
+      const robotNameSelectHOI = document.getElementById('robotNameHOI');
+
+      // Define available objects for each robot
+      const availableObjects = {
+        shadowhand: [
+          'longsword', 'microphone', 'mug', 'pen', 'phone', 'power_drill',
+          'spray', 'syringe', 'tong', 'wine_glass'
+        ],
+        leaphand: [
+          'microphone', 'mug', 'phone', 'power_drill',
+          'spray', 'syringe', 'tong', 'wine_glass'
+        ]
+      };
+
+      function updateObjectList() {
+        const selectedRobot = robotNameSelectHOI.value;
+        const objectSelect = objectNameSelectHOI;
+        
+        // Clear current options
+        objectSelect.innerHTML = '';
+        
+        // Add new options based on selected robot
+        availableObjects[selectedRobot].forEach(object => {
+          const option = document.createElement('option');
+          option.value = object;
+          option.text = object;
+          option.style.fontSize = '14px';
+          objectSelect.appendChild(option);
+        });
+
+        // Update models with new robot and first available object
+        updateModelHOI();
+      }
+
+      function updateModelHOI() {
+        const selectedObject = objectNameSelectHOI.value;
+        const selectedRobot = robotNameSelectHOI.value;
+        modelViewerHOI0.src = `static/data/HOI/${selectedRobot}/${selectedObject}/0.glb`;
+        modelViewerHOI1.src = `static/data/HOI/${selectedRobot}/${selectedObject}/1.glb`;
+        modelViewerHOI2.src = `static/data/HOI/${selectedRobot}/${selectedObject}/2.glb`;
+      }
+
+      robotNameSelectHOI.addEventListener('change', updateObjectList);
+      objectNameSelectHOI.addEventListener('change', updateModelHOI);
+
+      // Initialize with default robot
+      updateObjectList();
+
+      // Functional Grasp Model Viewer
+      const modelViewer2 = document.getElementById('modelViewer2');
+      const objectNameSelect = document.getElementById('objectName');
+
+      function updateModel() {
+        const selectedObject = objectNameSelect.value;
+        modelViewer2.src = `static/data/3dmodel/ShadowHand/${selectedObject}/0.glb`;
+      }
+
+      objectNameSelect.addEventListener('change', updateModel);
+    </script>
+    <!--/ Simulation Grasps -->
+
+     <!-- Partial Observation Grasps -->
+
+    <!--/ Partial Observation Grasps -->
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column">
+            <h2 class="title is-3 has-text-centered">Real-world Demos</h2>
+            <p class="has-text-centered" style="margin-top: -10px; margin-bottom: 20px; font-style: italic;">All videos are sped up by 2.25 times</p>
+          </div>
+        </div>
+    
+        <div class="columns is-centered has-text-centered">
+          <section class="video-section" style="display: flex; padding: 20px;">
+            <div class="main-video-container" style="flex: 2; margin-top: 25px; margin-right: 50px; text-align: center;">
+              <video id="main-video" autoplay muted loop playsinline style="width: 700px;" class="video-with-border">
+                <source src="static/data/realworld/tong.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          
+            <div class="covers-container" style="flex: 1; overflow-y: auto; height: 600px; display: flex; flex-direction: column; align-items: center;">
+              <div class="video-cover" onclick="changeVideo('static/data/realworld/wine_glass.mp4')" style="margin-bottom: 10px; cursor: pointer;">
+                <img src="static/data/realworld/wine_glass.png" alt="wine glass Cover" style="width: 120px; height: 120px;">
+                <p style="text-align: center;">Wine Glass</p>
+              </div>
+            
+              <div class="video-cover" onclick="changeVideo('static/data/realworld/tong.mp4')" style="margin-bottom: 10px; cursor: pointer;">
+                <img src="static/data/realworld/tong.png" alt="tong Cover" style="width: 120px; height: 120px;">
+                <p style="text-align: center;">Tong</p>
+              </div>
+            
+              <div class="video-cover" onclick="changeVideo('static/data/realworld/phone.mp4')" style="margin-bottom: 10px; cursor: pointer;">
+                <img src="static/data/realworld/phone.png" alt="Phone Cover" style="width: 120px; height: 120px;">
+                <p style="text-align: center;">Phone</p>
+              </div>
+            
+              <div class="video-cover" onclick="changeVideo('static/data/realworld/power_drill.mp4')" style="margin-bottom: 10px; cursor: pointer;">
+                <img src="static/data/realworld/power_drill.png" alt="Power Drill Cover" style="width: 120px; height: 120px;">
+                <p style="text-align: center;">Power Drill</p>
+              </div>
+            
+              <div class="video-cover" onclick="changeVideo('static/data/realworld/mug.mp4')" style="margin-bottom: 10px; cursor: pointer;">
+                <img src="static/data/realworld/mug.png" alt="Mug Cover" style="width: 120px; height: 120px;">
+                <p style="text-align: center;">Mug</p>
+              </div>
+
+              <div class="video-cover" onclick="changeVideo('static/data/realworld/microphone.mp4')" style="margin-bottom: 10px; cursor: pointer;">
+                <img src="static/data/realworld/microphone.png" alt="Microphone Cover" style="width: 120px; height: 120px;">
+                <p style="text-align: center;">Microphone</p>
+              </div>
+              
+              <div class="video-cover" onclick="changeVideo('static/data/realworld/spray.mp4')" style="margin-bottom: 10px; cursor: pointer;">
+                <img src="static/data/realworld/spray.png" alt="Spray Cover" style="width: 120px; height: 120px;">
+                <p style="text-align: center;">Spray</p>
+              </div>
+            
+              <div class="video-cover" onclick="changeVideo('static/data/realworld/syringe.mp4')" style="margin-bottom: 10px; cursor: pointer;">
+                <img src="static/data/realworld/syringe.png" alt="Syringe Cover" style="width: 120px; height: 120px;">
+                <p style="text-align: center;">Syringe</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+    
+    <script>
+      function changeVideo(videoSrc) {
+        const mainVideo = document.getElementById('main-video');
+        mainVideo.src = videoSrc;
+        mainVideo.muted = true;
+        mainVideo.loop = true;
+        mainVideo.load();
+        mainVideo.play();
+      }
+    </script> 
+    
+
+
+
+    <!-- Footer -->
+    <footer class="footer", style="padding: 40px 0;">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p style="text-align: center;">
+                This website is designed based on
+                <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+                <br>
+                Thanks for visiting😊!
+                <span id="busuanzi_container_site_pv">
+                  Total Page Views: <span id="busuanzi_value_site_pv"></span>
+                </span>
+                <br>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--/ Footer -->
+
+  </body>
+</html>
