@@ -204,12 +204,12 @@
             <div class="dropdown-container" style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
               <label for="objectNameHOI" style="font-size: 20px; font-weight: bold;">Object Name</label>
               <select id="objectNameHOI" class="custom-select" style="width: 200px; margin-top: 10px;">
+                <option value="power_drill" style="font-size: 14px;">power_drill</option>
                 <option value="longsword" style="font-size: 14px;">longsword</option>
                 <option value="microphone" style="font-size: 14px;">microphone</option>
                 <option value="mug" style="font-size: 14px;">mug</option>
                 <option value="pen" style="font-size: 14px;">pen</option>
                 <option value="phone" style="font-size: 14px;">phone</option>
-                <option value="power_drill" style="font-size: 14px;">power_drill</option>
                 <option value="spray" style="font-size: 14px;">spray</option>
                 <option value="syringe" style="font-size: 14px;">syringe</option>
                 <option value="tong" style="font-size: 14px;">tong</option>
@@ -232,6 +232,7 @@
                 <div class="content has-text-justified">
                   <p class="has-text-centered" style="margin-top: -10px; margin-bottom: 20px;">
                     Using these reconstructed HOI as training data, we train the interaction-centric grasping model DRO. 
+                    The results show that our model can predict functional grasps using reconstructed HOI from web images, and generalize to held-out unseen objects.
                   </p>
                 </div>
               </div>
@@ -270,11 +271,11 @@
       // Define available objects for each robot
       const availableObjects = {
         shadowhand: [
-          'longsword', 'microphone', 'mug', 'pen', 'phone', 'power_drill',
-          'spray', 'syringe', 'tong', 'wine_glass'
+          'power_drill', 'microphone', 'mug', 'pen', 'phone',
+          'spray', 'syringe', 'tong', 'wine_glass', 'longsword'
         ],
         leaphand: [
-          'microphone', 'mug', 'phone', 'power_drill',
+          'power_drill', 'microphone', 'mug', 'phone',
           'spray', 'syringe', 'tong', 'wine_glass'
         ]
       };
