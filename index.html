@@ -80,14 +80,10 @@
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
               <p>
-                Functional grasping is essential for enabling dexterous multi-finger robot hands to manipulate objects effectively.  
-                However, most prior work either focuses on power grasping, which simply involves holding an object still, or relies on costly teleoperated robot demonstrations to teach robots how to grasp each object functionally.
-                Instead, we propose extracting human grasp information from web images since they depict natural and functional object interactions, thereby bypassing the need for curated demonstrations.
-                We reconstruct hand-object interaction (HOI) 3D meshes from RGB images, retarget the human hand to multi-finger robot hands, and align the noisy object mesh with its accurate 3D shape. We show that these relatively low-quality HOI data from inexpensive web sources can effectively train a functional grasping model.
-                To further expand the grasp dataset for seen and unseen objects, we use the initially-trained grasping policy with web data in the IsaacGym simulator to generate physically feasible grasps while preserving functionality. 
-                We train the grasping model on 10 object categories and evaluate it on 9 unseen objects, including challenging items such as syringes, pens, spray bottles, and tongs, which are underrepresented in existing datasets.
-                We train the model on the web HOI dataset, achieving a 75.8% success rate on seen objects and 61.8% across all objects in simulation, with a 6.7% improvement in success rate and a 1.8$\times$ increase in functionality ratings over baselines. Simulator-augmented data further boosts performance from 61.8% to 83.4%.
-                The sim-to-real transfer to the LEAP Hand achieves a 85% success rate.
+                Functional grasping is essential for enabling dexterous multi-finger robot hands to manipulate objects effectively. Prior work largely focuses on power grasps, which only involve holding an object, or relies on in-domain demonstrations for specific objects. 
+                We propose leveraging human grasp information extracted from web images, which capture natural and functional hand–object interactions (HOI).
+                Using a pretrained 3D reconstruction model, we recover 3D human HOI meshes from RGB images. To train on these noisy HOI data, we propose to use: 1) an interaction-centric model to learn the functional interaction pattern between hand and object, and 2) geometry-based filtering to remove the infeasible grasps and physical simulation to retain grasps who can resist disturbance. 
+                In IssacGym simulation, our model trained on reconstructed HOI grasps achieves a 75.8% success rate on objects from the web dataset and generalizes to unseen objects, yielding a 6.7% improvement in success rate and a 1.8$\times$ increase in functionality ratings compared to baselines. In real-world experiments with the LEAP hand and Inspire hand, it attains a 77.5% success rate across 12 objects, including challenging ones such as a syringe, spray bottle, knife, and tongs. 
               </p>
             </div>
           </div>
@@ -105,7 +101,7 @@
             <div class="content has-text-justified">
               <figure>
                 <img src="./static/image/pipeline.png" alt="Overview of the Web2Grasp framework">
-                <figcaption style="font-style: normal; font-size: 0.95em;">We propose <strong>Web2Grasp</strong> for autonomously obtaining robot grasp data by reconstructing Hand-Object meshes from Web images, re-targeting the humand hand pose to a robot hand pose, and aligning the object mesh with a pseudo ground-truth object mesh obtained via text-to-3D approaches. We demonstrate that the resulting dataset obtained via web images and not requiring any robot-specific teleoperation enables training a supervised learning model with strong grasping performance both in simulation and in the real-world. </figcaption>
+                <figcaption style="font-style: normal; font-size: 0.95em;">We propose <strong>Web2Grasp</strong> for autonomously obtaining robot grasp data by reconstructing Hand-Object meshes from Web images and how to train dexterous grasping model using the noisy reconstructed HOI data. We demonstrate that the resulting dataset obtained via web images and not requiring any robot-specific teleoperation enables training a supervised learning model with strong grasping performance both in simulation and in the real-world. </figcaption>
               </figure>
             </div>
           </div>
@@ -236,7 +232,6 @@
                 <div class="content has-text-justified">
                   <p class="has-text-centered" style="margin-top: -10px; margin-bottom: 20px;">
                     Using these reconstructed HOI as training data, we train the interaction-centric grasping model DRO. 
-                
                   </p>
                 </div>
               </div>
@@ -244,53 +239,21 @@
           </div>
         </div>
 
-        <div class="columns is-centered has-text-centered">
-          <!-- Model Viewer for ShadowHand -->
-          <div class="column is-one-quarter" style="display: flex; flex-direction: column; align-items: center;">
-            <model-viewer
-              id="modelViewer2"
-              src="static/data/3dmodel/ShadowHand/axe/0.glb"
-              alt="ShadowHand Grasp"
-              ar
-              camera-controls
-              auto-rotate
-              auto-rotate-delay="1000"
-              interaction-prompt-threshold="2000"
-              exposure="1.2"
-              shadow-intensity="1"
-              environment-image="neutral"
-              style="width: 200px; height: 200px; border: 3px solid #66c0ff; border-radius: 15px;">
-            </model-viewer>
-            <p style="font-size: 20px; font-weight: bold;">Web2Grasp</p>
-          </div>
+        <!-- Object Carousel -->
+        <div class="object-carousel-container" style="position: relative; margin: 20px 0; overflow: hidden; width: 100%; max-width: 1000px; margin-left: auto; margin-right: auto;">
+          <!-- Left Arrow -->
+          <button id="carousel-left" class="carousel-arrow carousel-left" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(102, 192, 255, 0.8); border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white;">
+            &#8249;
+          </button>
+          
+          <!-- Right Arrow -->
+          <button id="carousel-right" class="carousel-arrow carousel-right" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(102, 192, 255, 0.8); border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white;">
+            &#8250;
+          </button>
 
-          <!-- Controls for Object Selection -->
-          <div class="column is-one-quarter">
-            <!-- Object Name Dropdown -->
-            <div class="dropdown-container" style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
-              <label for="objectName" style="font-size: 20px; font-weight: bold;">Object Name</label>
-              <select id="objectName" class="custom-select" style="width: 200px; margin-top: 10px;">
-                <option value="axe" style="font-size: 14px;">axe</option>
-                <option value="fire_torch" style="font-size: 14px;">fire_torch</option>
-                <option value="hammer" style="font-size: 14px;">hammer</option>
-                <option value="longsword" style="font-size: 14px;">longsword</option>
-                <option value="microphone" style="font-size: 14px;">microphone</option>
-                <option value="mug" style="font-size: 14px;">mug</option>
-                <option value="pen" style="font-size: 14px;">pen</option>
-                <option value="phone" style="font-size: 14px;">phone</option>
-                <option value="power_drill" style="font-size: 14px;">power_drill</option>
-                <option value="remote" style="font-size: 14px;">remote</option>
-                <option value="soap_bottle" style="font-size: 14px;">soap_bottle</option>
-                <option value="spray" style="font-size: 14px;">spray</option>
-                <option value="syringe" style="font-size: 14px;">syringe</option>
-                <option value="teapot" style="font-size: 14px;">teapot</option>
-                <option value="tong" style="font-size: 14px;">tong</option>
-                <option value="whip" style="font-size: 14px;">whip</option>
-                <option value="whisk" style="font-size: 14px;">whisk</option>
-                <option value="wine_glass" style="font-size: 14px;">wine_glass</option>
-                <option value="writing_brush" style="font-size: 14px;">writing_brush</option>
-              </select>
-            </div>
+          <!-- Scrollable Object Row -->
+          <div id="object-carousel" style="display: flex; padding: 20px 80px; transition: transform 0.3s ease; overflow: visible; width: max-content;">
+            <!-- Object items will be populated by JavaScript -->
           </div>
         </div>
       </div>
@@ -350,16 +313,86 @@
       // Initialize with default robot
       updateObjectList();
 
-      // Functional Grasp Model Viewer
-      const modelViewer2 = document.getElementById('modelViewer2');
-      const objectNameSelect = document.getElementById('objectName');
+      // Functional Grasp Carousel
+      const objectCarousel = document.getElementById('object-carousel');
+      const carouselLeft = document.getElementById('carousel-left');
+      const carouselRight = document.getElementById('carousel-right');
+      
+      const objects = [
+        'axe', 'fire_torch', 'hammer', 'longsword', 'microphone', 'mug',
+        'pen', 'phone', 'power_drill', 'remote', 'soap_bottle', 'spray',
+        'syringe', 'teapot', 'tong', 'whip', 'whisk', 'wine_glass', 'writing_brush'
+      ];
 
-      function updateModel() {
-        const selectedObject = objectNameSelect.value;
-        modelViewer2.src = `static/data/3dmodel/ShadowHand/${selectedObject}/0.glb`;
+      let currentIndex = 0;
+      const itemsPerView = 4;
+      const itemWidth = 220; // 200px model + 20px gap
+
+      // Create carousel items
+      function createCarouselItems() {
+        objectCarousel.innerHTML = '';
+        objects.forEach((object, index) => {
+          const item = document.createElement('div');
+          item.className = 'carousel-item';
+          item.style.cssText = 'flex: 0 0 200px; display: flex; flex-direction: column; align-items: center; margin-right: 20px;';
+          
+          item.innerHTML = `
+            <model-viewer
+              src="static/data/3dmodel/ShadowHand/${object}/0.glb"
+              alt="${object} Grasp"
+              ar
+              camera-controls
+              auto-rotate
+              auto-rotate-delay="1000"
+              interaction-prompt-threshold="2000"
+              exposure="1.2"
+              shadow-intensity="1"
+              environment-image="neutral"
+              style="width: 200px; height: 200px; border: 3px solid #66c0ff; border-radius: 15px;">
+            </model-viewer>
+            <p style="font-size: 16px; font-weight: bold; margin-top: 10px; text-transform: capitalize;">${object.replace('_', ' ')}</p>
+          `;
+          
+          objectCarousel.appendChild(item);
+        });
+        
+        // Debug: log total items created
+        console.log(`Created ${objects.length} carousel items`);
       }
 
-      objectNameSelect.addEventListener('change', updateModel);
+
+
+      // Scroll carousel
+      function scrollCarousel(direction) {
+        // Calculate max index to ensure all objects are viewable
+        // For 19 objects with 4 items per view, we need positions 0-15 (16 positions total)
+        const maxIndex = Math.max(0, objects.length - itemsPerView);
+        
+        if (direction === 'left') {
+          currentIndex = Math.max(0, currentIndex - 1);
+        } else if (direction === 'right') {
+          currentIndex = Math.min(maxIndex, currentIndex + 1);
+        }
+        // If no direction provided (initialization), keep current index
+        
+        const translateX = -(currentIndex * itemWidth);
+        objectCarousel.style.transform = `translateX(${translateX}px)`;
+        
+        // Update arrow visibility
+        carouselLeft.style.opacity = currentIndex === 0 ? '0.5' : '1';
+        carouselRight.style.opacity = currentIndex === maxIndex ? '0.5' : '1';
+        
+        // Debug info - can be removed later
+        console.log(`Current index: ${currentIndex}, Max index: ${maxIndex}, Total objects: ${objects.length}, Showing objects ${currentIndex + 1}-${Math.min(currentIndex + itemsPerView, objects.length)}`);
+      }
+
+      // Event listeners
+      carouselLeft.addEventListener('click', () => scrollCarousel('left'));
+      carouselRight.addEventListener('click', () => scrollCarousel('right'));
+
+      // Initialize carousel
+      createCarouselItems();
+      scrollCarousel(); // Initialize arrow states
     </script>
     <!--/ Simulation Grasps -->
 
